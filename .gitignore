@@ -23,3 +23,8 @@
 /public/assets/
 /assets/vendor
 ###< symfony/asset-mapper ###
+<<<<<<< HEAD
+=======
+/studing
+/studing.pub
+>>>>>>> cb72021 (initial)
