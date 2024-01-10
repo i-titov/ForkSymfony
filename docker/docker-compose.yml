@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+
+  database:
+    image: mysql
+    container_name: db
+    ports:
+      - ${DB_PORT}
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - /var/lib/mysql
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+
+
+
+  php-fpm:
+    container_name: php-fpm
+    build:
+      context: ./../
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - ./../:/var/www/
+    depends_on:
+      - database
+
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./nginx
+    ports:
+      - ${NGINX_PORT}:80
+    volumes:
+      - ..:/var/www:rw
+    depends_on:
+    - php-fpm
