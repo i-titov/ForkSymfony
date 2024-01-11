@@ -1,0 +1,115 @@
+Index: config/packages/security.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>security:\n    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords\n    password_hashers:\n        Symfony\\Component\\Security\\Core\\User\\PasswordAuthenticatedUserInterface: 'auto'\n    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider\n    providers:\n        users_in_memory: { memory: null }\n        back_end_users:\n            users:\n                test_admin_user : {}\n    firewalls:\n        dev:\n            pattern: ^/(_(profiler|wdt)|css|images|js)/\n            security: false\n        main:\n            lazy: true\n            provider: users_in_memory\n\n            # activate different ways to authenticate\n            # https://symfony.com/doc/current/security.html#the-firewall\n\n            # https://symfony.com/doc/current/security/impersonating_user.html\n            # switch_user: true\n\n    # Easy way to control access for large sections of your site\n    # Note: Only the *first* access control that matches will be used\n    access_control:\n        # - { path: ^/admin, roles: ROLE_ADMIN }\n        # - { path: ^/profile, roles: ROLE_USER }\n\nwhen@test:\n    security:\n        password_hashers:\n            # By default, password hashers are resource intensive and take time. This is\n            # important to generate secure password hashes. In tests however, secure hashes\n            # are not important, waste resources and increase test times. The following\n            # reduces the work factor to the lowest possible values.\n            Symfony\\Component\\Security\\Core\\User\\PasswordAuthenticatedUserInterface:\n                algorithm: auto\n                cost: 4 # Lowest possible value for bcrypt\n                time_cost: 3 # Lowest possible value for argon\n                memory_cost: 10 # Lowest possible value for argon\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/config/packages/security.yaml b/config/packages/security.yaml
+--- a/config/packages/security.yaml	(revision 9df2b3d2d976ce11603a4fa460b82061ff2f7994)
++++ b/config/packages/security.yaml	(date 1704977757287)
+@@ -6,15 +6,16 @@
+     providers:
+         users_in_memory: { memory: null }
+         back_end_users:
+-            users:
+-                test_admin_user : {}
++            memory:
++                users:
++                    admin_user : { password: '', roles: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']}
+     firewalls:
+         dev:
+             pattern: ^/(_(profiler|wdt)|css|images|js)/
+             security: false
+         main:
+             lazy: true
+-            provider: users_in_memory
++            provider: users_in_memory,back_end_users
+ 
+             # activate different ways to authenticate
+             # https://symfony.com/doc/current/security.html#the-firewall
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"6d060273-27a6-4810-9f32-04cd939e36e3\" name=\"Changes\" comment=\"\">\n      <change afterPath=\"$PROJECT_DIR$/src/Entity/Security/User.php\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/composer.lock\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/composer.lock\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/config/packages/security.yaml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/config/packages/security.yaml\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"ComposerSettings\">\n    <execution />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"PhpWorkspaceProjectConfiguration\">\n    <include_path>\n      <path value=\"$PROJECT_DIR$/vendor/symfony/flex\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/finder\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/http-foundation\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/framework-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/http-kernel\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/polyfill-mbstring\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/routing\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/polyfill-php83\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/service-contracts\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/runtime\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/var-dumper\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/string\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/yaml\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/var-exporter\" />\n      <path value=\"$PROJECT_DIR$/vendor/twig/twig\" />\n      <path value=\"$PROJECT_DIR$/vendor/theseer/tokenizer\" />\n      <path value=\"$PROJECT_DIR$/vendor/twig/extra-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/security-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/validator\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/mime\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/http-client-contracts\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/property-access\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/monolog-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/twig-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/mailer\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/security-csrf\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/phpunit-bridge\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/maker-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/security-http\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/security-core\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/web-profiler-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/web-link\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/serializer\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/ux-turbo\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/stimulus-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/webmozart/assert\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/notifier\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/property-info\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/password-hasher\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/process\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/twig-bridge\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/intl\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/http-client\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/translation\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/messenger\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/monolog-bridge\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/stopwatch\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/translation-contracts\" />\n      <path value=\"$PROJECT_DIR$/vendor/composer\" />\n      <path value=\"$PROJECT_DIR$/vendor/psr/event-dispatcher\" />\n      <path value=\"$PROJECT_DIR$/vendor/psr/cache\" />\n      <path value=\"$PROJECT_DIR$/vendor/psr/link\" />\n      <path value=\"$PROJECT_DIR$/vendor/psr/container\" />\n      <path value=\"$PROJECT_DIR$/vendor/psr/clock\" />\n      <path value=\"$PROJECT_DIR$/vendor/psr/log\" />\n      <path value=\"$PROJECT_DIR$/vendor/egulias/email-validator\" />\n      <path value=\"$PROJECT_DIR$/vendor/nikic/php-parser\" />\n      <path value=\"$PROJECT_DIR$/vendor/myclabs/deep-copy\" />\n      <path value=\"$PROJECT_DIR$/vendor/monolog/monolog\" />\n      <path value=\"$PROJECT_DIR$/vendor/phar-io/version\" />\n      <path value=\"$PROJECT_DIR$/vendor/phar-io/manifest\" />\n      <path value=\"$PROJECT_DIR$/vendor/phpunit/php-timer\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/migrations\" />\n      <path value=\"$PROJECT_DIR$/vendor/phpstan/phpdoc-parser\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/doctrine-migrations-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/phpunit/php-text-template\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/lexer\" />\n      <path value=\"$PROJECT_DIR$/vendor/phpunit/phpunit\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/cache\" />\n      <path value=\"$PROJECT_DIR$/vendor/phpunit/php-invoker\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/inflector\" />\n      <path value=\"$PROJECT_DIR$/vendor/phpunit/php-code-coverage\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/dbal\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/persistence\" />\n      <path value=\"$PROJECT_DIR$/vendor/phpunit/php-file-iterator\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/common\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/orm\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/instantiator\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/collections\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/event-manager\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/dotenv\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/deprecations\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/sql-formatter\" />\n      <path value=\"$PROJECT_DIR$/vendor/sebastian/comparator\" />\n      <path value=\"$PROJECT_DIR$/vendor/doctrine/doctrine-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/asset\" />\n      <path value=\"$PROJECT_DIR$/vendor/sebastian/object-enumerator\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/cache\" />\n      <path value=\"$PROJECT_DIR$/vendor/sebastian/global-state\" />\n      <path value=\"$PROJECT_DIR$/vendor/sebastian/complexity\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/browser-kit\" />\n      <path value=\"$PROJECT_DIR$/vendor/sebastian/object-reflector\" />\n      <path value=\"$PROJECT_DIR$/vendor/sebastian/diff\" />\n      <path value=\"$PROJECT_DIR$/vendor/sebastian/code-unit-reverse-lookup\" />\n      <path value=\"$PROJECT_DIR$/vendor/sebastian/lines-of-code\" />\n      <path value=\"$PROJECT_DIR$/vendor/sebastian/recursion-context\" />\n      <path value=\"$PROJECT_DIR$/vendor/sebastian/version\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/config\" />\n      <path value=\"$PROJECT_DIR$/vendor/sebastian/type\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/asset-mapper\" />\n      <path value=\"$PROJECT_DIR$/vendor/sebastian/code-unit\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/expression-language\" />\n      <path value=\"$PROJECT_DIR$/vendor/sebastian/cli-parser\" />\n      <path value=\"$PROJECT_DIR$/vendor/sebastian/exporter\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/event-dispatcher\" />\n      <path value=\"$PROJECT_DIR$/vendor/sebastian/environment\" />\n      <path value=\"$PROJECT_DIR$/vendor/sebastian/resource-operations\" />\n      <path value=\"$PROJECT_DIR$/vendor/phpdocumentor/reflection-common\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/debug-bundle\" />\n      <path value=\"$PROJECT_DIR$/vendor/masterminds/html5\" />\n      <path value=\"$PROJECT_DIR$/vendor/phpdocumentor/reflection-docblock\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/filesystem\" />\n      <path value=\"$PROJECT_DIR$/vendor/phpdocumentor/type-resolver\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/css-selector\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/dom-crawler\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/doctrine-messenger\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/deprecation-contracts\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/doctrine-bridge\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/cache-contracts\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/error-handler\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/dependency-injection\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/clock\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/console\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/options-resolver\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/polyfill-intl-icu\" />\n      <path value=\"$PROJECT_DIR$/vendor/symfony/form\" />\n    </include_path>\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"git-widget-placeholder\": \"master\",\n    \"node.js.selected.package.tslint\": \"(autodetect)\"\n  }\n}]]></component>\n  <component name=\"RunManager\">\n    <configuration default=\"true\" type=\"ComposerRunConfigurationType\" factoryName=\"Composer Script\">\n      <method v=\"2\" />\n    </configuration>\n  </component>\n  <component name=\"TaskManager\">\n    <servers />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 9df2b3d2d976ce11603a4fa460b82061ff2f7994)
++++ b/.idea/workspace.xml	(date 1704977757450)
+@@ -5,8 +5,7 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="6d060273-27a6-4810-9f32-04cd939e36e3" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/src/Entity/Security/User.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -14,8 +13,12 @@
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
+   </component>
+-  <component name="ComposerSettings">
++  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
++    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+     <execution />
++  </component>
++  <component name="Git.Settings">
++    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+   <component name="MarkdownSettingsMigration">
+     <option name="stateVersion" value="1" />
+@@ -153,20 +156,48 @@
+       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-icu" />
+       <path value="$PROJECT_DIR$/vendor/symfony/form" />
+     </include_path>
++  </component>
++  <component name="ProjectColorInfo"><![CDATA[{
++  "associatedIndex": 3
++}]]></component>
++  <component name="ProjectId" id="2aoFFyExLcY1BW05D7aYgwtO1sZ" />
++  <component name="ProjectViewState">
++    <option name="hideEmptyMiddlePackages" value="true" />
++    <option name="showLibraryContents" value="true" />
+   </component>
+   <component name="PropertiesComponent"><![CDATA[{
+   "keyToString": {
+-    "git-widget-placeholder": "master",
+-    "node.js.selected.package.tslint": "(autodetect)"
++    "RunOnceActivity.OpenProjectViewOnStart": "true",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "git-widget-placeholder": "security",
++    "kotlin-language-version-configured": "true",
++    "node.js.detected.package.eslint": "true",
++    "node.js.selected.package.eslint": "(autodetect)",
++    "node.js.selected.package.tslint": "(autodetect)",
++    "nodejs_package_manager_path": "npm",
++    "vue.rearranger.settings.migration": "true"
+   }
+ }]]></component>
+   <component name="RunManager">
+     <configuration default="true" type="ComposerRunConfigurationType" factoryName="Composer Script">
++      <option name="pathToComposerJson" value="$PROJECT_DIR$/composer.json" />
+       <method v="2" />
+     </configuration>
+   </component>
++  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
++    <task active="true" id="Default" summary="Default task">
++      <changelist id="6d060273-27a6-4810-9f32-04cd939e36e3" name="Changes" comment="" />
++      <created>1704976932597</created>
++      <option name="number" value="Default" />
++      <option name="presentableId" value="Default" />
++      <updated>1704976932597</updated>
++      <workItem from="1704976935200" duration="811000" />
++    </task>
+     <servers />
++  </component>
++  <component name="TypeScriptGeneratedFilesManager">
++    <option name="version" value="3" />
+   </component>
+   <component name="VcsManagerConfiguration">
+     <option name="LAST_COMMIT_MESSAGE" value="" />
