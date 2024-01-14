@@ -7,7 +7,7 @@ security:
         admins_users:
             memory:
                 users:
-                    testadmin@test.fr: { password : '$2y$13$cxKo5cabb/Am9x0opuwrPOnAF8ixdVqvFT9BrlyHo/yi2BVWTKglO', roles: ['ROLE_ADMIN']}
+                    testadmin@test.fr: { password: '$2y$13$jT0HMXMj9Xn/xq2PYbOOKuW/lyXAUcbYN6jk8u1Obp4NJ/QfVQw2y', roles: [ 'ROLE_ADMIN' ] }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -17,7 +17,16 @@ security:
             provider: admins_users
             form_login:
                 login_path: app_login
-                check_path: app_login
+                check_path: app_login_check
+
+        admin:
+
+            pattern: ^/admin
+            lazy: false
+            provider: admins_users
+            form_login:
+                login_path: /admin/login
+                check_path: /admin/login_check
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
