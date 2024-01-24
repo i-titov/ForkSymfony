@@ -2,7 +2,7 @@ version: '3.8'
 services:
 
   database:
-    image: mysql
+    image: mysql:latest
     container_name: database
     ports:
       - ${DB_PORT}
@@ -13,8 +13,6 @@ services:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_ALLOW_EMPTY_PASSWORD: yes
 
-
-
   php-fpm:
     container_name: php-fpm
     build:
@@ -24,7 +22,6 @@ services:
       - ./../:/var/www/
     depends_on:
       - database
-
 
   nginx:
     container_name: nginx

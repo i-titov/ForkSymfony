@@ -1,5 +1,8 @@
 security:
   password_hashers:
+    App\Entity\NewUsersEntity:
+      algorithm: auto
+
     Symfony\Component\Security\Core\User\InMemoryUser:
       algorithm: auto
   providers:
@@ -7,6 +10,7 @@ security:
       memory:
         users:
           john_admin@test.fr: { password: '$2y$13$boSzyMh6lUoTvu9tzPzIAuenKo7ZWPTJXKxLTRf9ymPg1/U9PR83m', roles: ['ROLE_ADMIN'] }
+          anny_user@test.fr: { password: '$2y$13$.CE.RlMB4nJo7HI48wOywuAmis/rHxnUzbjizVfU8lyg/P/PxW9aq', roles: ['ROLE_USER'] }
   firewalls:
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -22,7 +26,6 @@ security:
       form_login:
         login_path: app_login
         check_path: app_login
-        default_target_path: app_admin_dashbord
 
     admin:
       # Admin firewall
@@ -31,4 +34,4 @@ security:
 
   access_control:
      - { path: ^/admin, roles: ROLE_ADMIN }
-    # - { path: ^/profile, roles: ROLE_USER }
+
